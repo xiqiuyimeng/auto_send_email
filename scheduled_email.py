@@ -15,9 +15,6 @@ from_address = 'JEET847466569@163.com'
 login_pwd = 'jeet847466569'
 to_address = {
     'self': '847466569@qq.com',
-    'other': '270294198@qq.com',
-    'hongxia': '1187275289@qq.com',
-    'wife': '1653516743@qq.com'
 }
 
 
