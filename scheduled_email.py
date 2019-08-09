@@ -2,6 +2,7 @@
 import sys
 sys.path.append('../')  # 为了能在命令行启动
 from auto_send_email.send_email import Email
+from auto_send_email import config
 from datetime import datetime
 import schedule
 import requests
@@ -10,12 +11,10 @@ _author_ = 'luwt'
 _date_ = '2019/8/7 10:40'
 
 
-ciba_url = 'https://api.ooopn.com/ciba/api.php'
-from_address = '847466569@qq.com'
-login_pwd = 'ywuppyiilnwsbejb'
-to_address = {
-    'self': 'JEET847466569@163.com',
-}
+ciba_url = config.ciba_url
+from_address = config.from_address
+login_pwd = config.login_pwd
+to_address = config.to_address
 
 
 # 获取金山词霸每日一词，返回中文和英文两句话，图片
@@ -37,7 +36,7 @@ def send(sub, content):
 def morning_job():
     ch, en, img_url = get_ciba_everyday_sentence()
     mail_sub = '{}日常上班打卡提醒！'.format(datetime.now().strftime('%Y-%m-%d'))
-    mail_content = '上班时间{}，记得打卡，一个月只有五次补卡机会！<br/>{}<br/>{}<br/><img src="{}">'\
+    mail_content = '<h1>上班时间{}，记得打卡，一个月只有五次补卡机会！</h1><br/>{}<br/>{}<br/><img src="{}">'\
         .format(datetime.now().strftime('%H:%M'), ch, en, img_url)
     send(mail_sub, mail_content)
 
@@ -45,7 +44,7 @@ def morning_job():
 def nightfall_job():
     ch, en, img_url = get_ciba_everyday_sentence()
     mail_sub = '{}日常下班打卡提醒！'.format(datetime.now().strftime('%Y-%m-%d'))
-    mail_content = '下班时间{}，记得打卡，一个月仅仅五次补卡的机会！<br/>{}<br/>{}<br/><img src="{}">'\
+    mail_content = '<h1>下班时间{}，记得打卡，一个月仅仅五次补卡的机会！</h1><br/>{}<br/>{}<br/><img src="{}">'\
         .format(datetime.now().strftime('%H:%M'), ch, en, img_url)
     send(mail_sub, mail_content)
 
