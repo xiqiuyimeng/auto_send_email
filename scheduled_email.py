@@ -11,18 +11,18 @@ _date_ = '2019/8/7 10:40'
 
 
 ciba_url = 'https://api.ooopn.com/ciba/api.php'
-from_address = 'JEET847466569@163.com'
-login_pwd = 'jeet847466569'
+from_address = '847466569@qq.com'
+login_pwd = 'ywuppyiilnwsbejb'
 to_address = {
-    'self': '847466569@qq.com',
+    'self': 'JEET847466569@163.com',
 }
 
 
-# 获取金山词霸每日一词，返回中文和英文两句话
+# 获取金山词霸每日一词，返回中文和英文两句话，图片
 def get_ciba_everyday_sentence():
     response = requests.get(ciba_url)
     result = json.loads(response.text)
-    return result.get('ciba'), result.get('ciba-en')
+    return result.get('ciba'), result.get('ciba-en'), result.get('imgurl')
 
 
 def send(sub, content):
@@ -35,18 +35,18 @@ def send(sub, content):
 
 
 def morning_job():
-    ch, en = get_ciba_everyday_sentence()
+    ch, en, img_url = get_ciba_everyday_sentence()
     mail_sub = '{}日常上班打卡提醒！'.format(datetime.now().strftime('%Y-%m-%d'))
-    mail_content = '上班时间{}，记得打卡，一个月只有五次补卡机会！\n{}\n{}'\
-        .format(datetime.now().strftime('%H:%M'), ch, en)
+    mail_content = '上班时间{}，记得打卡，一个月只有五次补卡机会！<br/>{}<br/>{}<br/><img src="{}">'\
+        .format(datetime.now().strftime('%H:%M'), ch, en, img_url)
     send(mail_sub, mail_content)
 
 
 def nightfall_job():
-    ch, en = get_ciba_everyday_sentence()
+    ch, en, img_url = get_ciba_everyday_sentence()
     mail_sub = '{}日常下班打卡提醒！'.format(datetime.now().strftime('%Y-%m-%d'))
-    mail_content = '下班时间{}，记得打卡，一个月仅仅五次补卡的机会！\n{}\n{}'\
-        .format(datetime.now().strftime('%H:%M'), ch, en)
+    mail_content = '下班时间{}，记得打卡，一个月仅仅五次补卡的机会！<br/>{}<br/>{}<br/><img src="{}">'\
+        .format(datetime.now().strftime('%H:%M'), ch, en, img_url)
     send(mail_sub, mail_content)
 
 
